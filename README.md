@@ -100,8 +100,6 @@ Una aplicación móvil desarrollada con Ionic Angular que permite consumir múlt
 
 3. **Ejecutar en modo desarrollo**
    ```bash
-   npm start
-   # o
    ionic serve
    ```
 
