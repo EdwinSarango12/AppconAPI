@@ -38,7 +38,7 @@ Una aplicación móvil desarrollada con Ionic Angular que permite consumir múlt
 - **Diseño Responsivo**: Optimizado para dispositivos móviles y tablets
 - **Manejo de Errores**: Mensajes claros cuando falla la carga de datos
 
-## 📱 Estructura de la Aplicación
+## Estructura de la Aplicación
 
 ### Páginas Principales
 
