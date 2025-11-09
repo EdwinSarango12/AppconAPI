@@ -1,0 +1,92 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>
+      APIs Combinadas
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="refresh()" [disabled]="loading">
+        <ion-icon name="refresh-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">APIs Combinadas</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="content-wrapper">
+    <!-- Loading Spinner -->
+    <div *ngIf="loading" class="loading-container">
+      <ion-spinner name="crescent" color="primary"></ion-spinner>
+      <p>Cargando datos...</p>
+    </div>
+
+    <!-- Error Message -->
+    <ion-card *ngIf="error && !loading" color="danger">
+      <ion-card-content>
+        <ion-icon name="alert-circle-outline"></ion-icon>
+        {{ error }}
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Combined Content -->
+    <div *ngIf="!loading && !error">
+      <!-- Joke Section -->
+      <ion-card class="joke-card">
+        <ion-card-header>
+          <ion-icon name="happy-outline" color="warning" class="section-icon"></ion-icon>
+          <ion-card-title>Chiste del Día</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p class="joke-text">{{ getJokeText() }}</p>
+          <ion-badge color="warning" *ngIf="joke && !joke.error">{{ joke.category }}</ion-badge>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Images Section -->
+      <ion-grid>
+        <ion-row>
+          <!-- Cat Image -->
+          <ion-col size="12" size-md="6">
+            <ion-card class="image-card">
+              <ion-card-header>
+                <ion-icon name="paw-outline" color="success" class="section-icon"></ion-icon>
+                <ion-card-title>Gato Aleatorio</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <img *ngIf="catImage && !catImage.error" [src]="catImage.url" alt="Random Cat" class="animal-image">
+                <p *ngIf="catImage && catImage.error" class="error-text">{{ catImage.message }}</p>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+
+          <!-- Dog Image -->
+          <ion-col size="12" size-md="6">
+            <ion-card class="image-card">
+              <ion-card-header>
+                <ion-icon name="paw-outline" color="tertiary" class="section-icon"></ion-icon>
+                <ion-card-title>Perro Aleatorio</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <img *ngIf="dogImage && !dogImage.error" [src]="dogImage.message" alt="Random Dog" class="animal-image">
+                <p *ngIf="dogImage && dogImage.error" class="error-text">{{ dogImage.message }}</p>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <!-- Refresh Button -->
+      <div class="refresh-section">
+        <ion-button expand="block" (click)="refresh()" [disabled]="loading">
+          <ion-icon name="refresh-outline" slot="start"></ion-icon>
+          Cargar Nuevos Datos
+        </ion-button>
+      </div>
+    </div>
+  </div>
+</ion-content>

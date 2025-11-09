@@ -1,0 +1,80 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="warning">
+    <ion-title>
+      Chistes
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="refresh()" [disabled]="loading">
+        <ion-icon name="refresh-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Chistes</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="content-wrapper">
+    <!-- Loading Spinner -->
+    <div *ngIf="loading" class="loading-container">
+      <ion-spinner name="crescent" color="warning"></ion-spinner>
+      <p>Cargando chiste...</p>
+    </div>
+
+    <!-- Error Message -->
+    <ion-card *ngIf="error && !loading" color="danger">
+      <ion-card-content>
+        <ion-icon name="alert-circle-outline"></ion-icon>
+        {{ error }}
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Current Joke -->
+    <div *ngIf="!loading && joke && !joke.error">
+      <ion-card class="current-joke-card">
+        <ion-card-header>
+          <div class="joke-header">
+            <ion-icon name="happy-outline" color="warning"></ion-icon>
+            <ion-card-title>Chiste Actual</ion-card-title>
+          </div>
+          <ion-badge [color]="joke.safe ? 'success' : 'warning'">
+            {{ joke.safe ? 'Seguro' : 'Cuidado' }}
+          </ion-badge>
+          <ion-badge color="warning">{{ joke.category }}</ion-badge>
+        </ion-card-header>
+        <ion-card-content>
+          <p class="joke-text">{{ getJokeText(joke) }}</p>
+        </ion-card-content>
+      </ion-card>
+
+      <div class="action-section">
+        <ion-button expand="block" color="warning" (click)="refresh()" [disabled]="loading">
+          <ion-icon name="refresh-outline" slot="start"></ion-icon>
+          Nuevo Chiste
+        </ion-button>
+      </div>
+    </div>
+
+    <!-- Joke History -->
+    <div *ngIf="jokeHistory.length > 0" class="history-section">
+      <h2 class="history-title">
+        <ion-icon name="time-outline"></ion-icon>
+        Historial de Chistes
+      </h2>
+      
+      <ion-card *ngFor="let historyJoke of jokeHistory; let i = index" class="history-joke-card">
+        <ion-card-header>
+          <ion-badge color="medium">{{ i + 1 }}</ion-badge>
+          <ion-badge color="warning">{{ historyJoke.category }}</ion-badge>
+        </ion-card-header>
+        <ion-card-content>
+          <p class="joke-text-small">{{ getJokeText(historyJoke) }}</p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+</ion-content>

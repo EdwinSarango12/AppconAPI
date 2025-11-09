@@ -1,0 +1,54 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>
+      API Explorer
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">API Explorer</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="content-wrapper">
+    <div class="welcome-section">
+      <ion-icon name="cloud-outline" class="welcome-icon"></ion-icon>
+      <h1>Explorador de APIs</h1>
+      <p>Selecciona una opción para consumir diferentes APIs</p>
+    </div>
+
+    <ion-list class="api-list">
+      <ion-item 
+        *ngFor="let option of apiOptions" 
+        button 
+        (click)="navigateTo(option.route)"
+        detail="true"
+        class="api-item">
+        <ion-icon [name]="option.icon" [color]="option.color" slot="start" class="api-icon"></ion-icon>
+        <ion-label>
+          <h2>{{ option.title }}</h2>
+          <p>{{ option.description }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+
+    <div class="info-section">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>APIs Disponibles</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ul>
+            <li><strong>JokeAPI:</strong> Chistes en español</li>
+            <li><strong>The Cat API:</strong> Imágenes de gatos</li>
+            <li><strong>Dog CEO API:</strong> Imágenes de perros</li>
+            <li><strong>Cataas:</strong> Gatos como servicio</li>
+          </ul>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+</ion-content>

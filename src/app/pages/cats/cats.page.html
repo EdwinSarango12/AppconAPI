@@ -1,0 +1,103 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="success">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/tab1"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Gatos
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="refresh()" [disabled]="loading">
+        <ion-icon name="refresh-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Gatos</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="content-wrapper">
+    <!-- Loading Spinner -->
+    <div *ngIf="loading" class="loading-container">
+      <ion-spinner name="crescent" color="success"></ion-spinner>
+      <p>Cargando gatos...</p>
+    </div>
+
+    <!-- Error Message -->
+    <ion-card *ngIf="error && !loading" color="danger">
+      <ion-card-content>
+        <ion-icon name="alert-circle-outline"></ion-icon>
+        {{ error }}
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Main Cat Image -->
+    <div *ngIf="!loading && catImage">
+      <ion-card class="main-cat-card">
+        <ion-card-header>
+          <div class="card-header">
+            <ion-icon name="paw-outline" color="success"></ion-icon>
+            <ion-card-title>The Cat API</ion-card-title>
+          </div>
+        </ion-card-header>
+        <img [src]="catImage.url" alt="Random Cat" class="main-cat-image">
+        <ion-card-content>
+          <div class="image-info">
+            <ion-badge color="success">{{ catImage.width }}x{{ catImage.height }}</ion-badge>
+            <ion-badge color="medium">ID: {{ catImage.id }}</ion-badge>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Cataas Image -->
+      <ion-card class="cataas-card">
+        <ion-card-header>
+          <div class="card-header">
+            <ion-icon name="paw-outline" color="success"></ion-icon>
+            <ion-card-title>Cataas (Cat as a Service)</ion-card-title>
+          </div>
+        </ion-card-header>
+        <img [src]="cataasImage" alt="Cataas Cat" class="main-cat-image">
+        <ion-card-content>
+          <p class="api-description">Servicio de gatos aleatorios</p>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Action Buttons -->
+      <div class="action-section">
+        <ion-button expand="block" color="success" (click)="refresh()" [disabled]="loading">
+          <ion-icon name="refresh-outline" slot="start"></ion-icon>
+          Nuevo Gato
+        </ion-button>
+      </div>
+    </div>
+
+    <!-- Cat Gallery -->
+    <div *ngIf="catGallery.length > 0" class="gallery-section">
+      <h2 class="gallery-title">
+        <ion-icon name="images-outline"></ion-icon>
+        Galería de Gatos
+      </h2>
+      
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" size-md="4" *ngFor="let cat of catGallery">
+            <div class="gallery-item">
+              <img [src]="cat.url" [alt]="'Cat ' + cat.id" class="gallery-image">
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-button expand="block" fill="outline" color="success" (click)="loadMoreCats()">
+        <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+        Cargar Más Gatos
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
